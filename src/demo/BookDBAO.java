@@ -3,6 +3,7 @@ package demo;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by chitboon on 10/23/15.
@@ -15,6 +16,7 @@ public class BookDBAO {
     public static String dbdriver = "com.mysql.jdbc.Driver";
     public static String username = "root";
     public static String password = "mysql";
+    private Random random = new Random();
 
     // constructor to load the jdbc driver, exception will be thrown if database driver is not found
     public BookDBAO() throws Exception {
@@ -35,8 +37,7 @@ public class BookDBAO {
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setString(1,bookId);
             ResultSet rs = pstmt.executeQuery();
-            if (rs != null) {
-                rs.next();
+            if (rs != null && rs.next()) {
                 book = new BookDetails();
                 book.setBookId(rs.getString("id"));
                 book.setDescription(rs.getString("description"));
@@ -55,6 +56,12 @@ public class BookDBAO {
         return book;
     }
 
+    // Get a random book from database
+    public BookDetails getBook() {
+        List<BookDetails> list = getAllBook();
+        int i = random.nextInt(list.size());
+        return list.get(i);
+    }
     // Retrieve all the books from database
     public List<BookDetails> getAllBook() {
         String sql = "select * from books";
