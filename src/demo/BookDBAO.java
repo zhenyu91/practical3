@@ -89,4 +89,33 @@ public class BookDBAO {
         }
         return list;
     }
+
+    // Retrieve all the books from database
+    public List<BookDetails> getBooks(String search) {
+        String sql = "select * from books where title like ?";
+        ArrayList<BookDetails> list = new ArrayList<BookDetails>();
+        try {
+            getConnection();
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, "%" +search + "%");
+            ResultSet rs = pstmt.executeQuery();
+            while (rs != null && rs.next()) {
+                BookDetails book = new BookDetails();
+                book.setBookId(rs.getString("id"));
+                book.setDescription(rs.getString("description"));
+                book.setFirstName(rs.getString("first_name"));
+                book.setInventory(rs.getInt("inventory"));
+                book.setOnSale(rs.getBoolean("onSale"));
+                book.setPrice(rs.getFloat("price"));
+                book.setSurname(rs.getString("surname"));
+                book.setTitle(rs.getString("title"));
+                book.setYear(rs.getInt("calendar_year"));
+                list.add(book);
+            }
+            pstmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }

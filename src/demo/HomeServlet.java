@@ -18,17 +18,13 @@ public class HomeServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            PrintWriter out = response.getWriter();
-            out.println(getContent());
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ServletException(e);
-        }
+        PrintWriter out = response.getWriter();
+        out.println(getContent());
+        out.close();
     }
 
-    private String getContent() throws Exception {
+    private String getContent() {
+        try {
             BookDBAO db = new BookDBAO();
             BookDetails bd = db.getBookDetails("203");
             StringBuilder buffer = new StringBuilder();
@@ -51,5 +47,9 @@ public class HomeServlet extends HttpServlet {
                     "<br> &nbsp;<br> &nbsp;<br> &nbsp;</body></html>");
 
             return buffer.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

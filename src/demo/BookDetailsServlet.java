@@ -26,6 +26,8 @@ public class BookDetailsServlet extends HttpServlet {
                 request.setAttribute("book", bd);
                 // forward the request to bookdetails.jsp, there must be a "/" before the web resource reference
                 getServletContext().getRequestDispatcher("/bookdetails.jsp").forward(request,response);
+            } else {
+                
             }
         } catch (Exception e) {
             e.printStackTrace();
