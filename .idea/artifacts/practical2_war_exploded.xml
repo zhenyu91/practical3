@@ -7,7 +7,6 @@
           <element id="module-output" name="practical2" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="mysql-connector-java-5.1.35-bin" />
           <element id="library" level="project" name="JPA 2.0" />
         </element>
       </element>
